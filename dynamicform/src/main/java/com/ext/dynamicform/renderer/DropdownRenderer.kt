@@ -1,13 +1,11 @@
 package com.ext.dynamicform.renderer
 
 import android.content.Context
-import android.view.View
-import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import android.widget.Spinner
 import com.ext.dynamicform.model.FieldConfig
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputLayout
 
 object DropdownRenderer {
 
@@ -17,42 +15,37 @@ object DropdownRenderer {
         field: FieldConfig,
         result: MutableMap<String, Any?>
     ) {
-        val spinner = Spinner(context)
+        val textInputLayout = TextInputLayout(context).apply {
+            hint = field.label
+            endIconMode = TextInputLayout.END_ICON_DROPDOWN_MENU
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+
+        val autoCompleteTextView = MaterialAutoCompleteTextView(context).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
 
         val options = field.options ?: emptyList()
 
         val adapter = ArrayAdapter(
             context,
-            android.R.layout.simple_spinner_item,
+            android.R.layout.simple_list_item_1,
             options
-        ).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        }
-
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                result[field.key] = options.getOrNull(position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                result[field.key] = null
-            }
-        }
-
-        parent.addView(
-            spinner,
-            ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
         )
+
+        autoCompleteTextView.setAdapter(adapter)
+
+        autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+            result[field.key] = options[position]
+        }
+
+        textInputLayout.addView(autoCompleteTextView)
+        parent.addView(textInputLayout)
     }
 }

@@ -13,11 +13,21 @@ object FieldRenderer {
         result: MutableMap<String, Any?>
     ) {
         when (field.type.lowercase()) {
+
             "text", "email", "number", "password" ->
                 TextFieldRenderer.render(context, parent, field, result)
 
             "dropdown" ->
                 DropdownRenderer.render(context, parent, field, result)
+
+            "checkbox" ->
+                CheckboxRenderer.render(context, parent, field, result)
+
+            "checkbox_group" ->
+                CheckboxGroupRenderer.render(context, parent, field, result)
+
+            "radio" ->
+                RadioRenderer.render(context, parent, field, result)
         }
     }
 }

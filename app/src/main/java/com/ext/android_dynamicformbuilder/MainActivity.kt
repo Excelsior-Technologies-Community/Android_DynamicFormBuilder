@@ -40,6 +40,30 @@ class MainActivity : AppCompatActivity() {
       "required": true
     },
     {
+      "type": "password",
+      "key": "password",
+      "label": "password",
+      "required": true
+    },
+    {
+      "type": "checkbox",
+      "key": "terms",
+      "label": "Accept Terms",
+      "required": true
+    },
+    {
+      "type": "checkbox_group",
+      "key": "skills",
+      "label": "Skills",
+      "options": ["Kotlin", "Java", "Compose"]
+    },
+    {
+      "type": "radio",
+      "key": "experience",
+      "label": "Experience",
+      "options": ["Junior", "Mid", "Senior"]
+    },
+    {
       "type": "dropdown",
       "key": "gender",
       "label": "Gender",
