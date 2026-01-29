@@ -36,7 +36,7 @@ dependencyResolutionManagement {
 ### Add Dependency
 ```
 dependencies {
-	        implementation 'com.github.Excelsior-Technologies-Community:Android_EmptyStateWidgets:1.0.0'
+	        implementation 'com.github.Excelsior-Technologies-Community:Android_DynamicFormBuilder:1.0.0'
 	}
 ```
 
